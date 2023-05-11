@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GroupOfStudents {
@@ -12,6 +13,28 @@ public class GroupOfStudents {
     List<Student> students = new ArrayList<>(); //список студентів
     List<String> tasks = new ArrayList<>(); //список завдань
     private Student starosta;
+    /********************************************************************************
+     * Задача із зірочкою -позначити завдання як виконане (для зазначеного студента)*
+     *******************************************************************************/
+    HashMap<String, List<Student>> tasksDone = new HashMap<>();
+    /*
+    я би створив у класі група поле мапу з ключем тип стрінг
+     де зберігав би таску і значенням ліст студентів де би зберігав студентів які вже виконали її
+    Треба дістати по ключу ліст і додати до ліста студента,
+    якщо такого ліста по ключу немає то створити ліст додати студента і поставити ліст по ключу в мапу.
+     */
+
+    public void setTasksDone(String task, Student student) {
+        if (tasksDone.containsKey(task)) { //перевіряємо, чи є дана задача у значенні всіх ключів мапи
+            tasksDone.get(task).add(student); //додаємо студента у список студентів, якому ключем є ця задача
+        } else {
+            List<Student> studentsDoneTask = new ArrayList<>();
+            studentsDoneTask.add(student); //додаємо студента у новий ліст студентів
+            tasksDone.put(task, studentsDoneTask); //додаємо до мапи ключ(задача), значення (новий ліст студентів)
+        }
+
+    }
+/****************************************/
 
     public GroupOfStudents(Student student) { //конструктор групи /створити групу
         this.starosta = student;
